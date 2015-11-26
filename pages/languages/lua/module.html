@@ -1,0 +1,35 @@
+
+<html>
+<h1>a module implemetation for lua</h1>
+
+<p>add a namespace for lua</p>
+
+<h2>for example :</h2>
+
+<h3>you can write something in file <code>dirpath/json.lua</code></h3>
+
+<pre><code>function encode(...)
+end
+
+function decode(...)
+end
+</code></pre>
+
+<h3>and we use as following</h3>
+
+<pre><code>json = import("dirpath/json.lua")
+json.encode(...)
+json.decode(...)
+</code></pre>
+
+<h2>here is the code:</h2>
+
+<pre><code>function import(path)
+    local func, err = assert(loadfile(path))
+    local m = {}
+    setmetatable(m, {__index = _G})
+    setfenv(func, m)()
+    return m
+end
+</code></pre>
+<html/>
